@@ -20,6 +20,7 @@ export default function SignInPage() {
 }
 
 const SingInContainer = styled.section`
+  width: auto;
   height: 100vh;
   display: flex;
   flex-direction: column;

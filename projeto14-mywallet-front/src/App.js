@@ -4,8 +4,14 @@ import HomePage from "./pages/HomePage"
 import SignInPage from "./pages/SignInPage"
 import SignUpPage from "./pages/SignUpPage"
 import TransactionsPage from "./pages/TransactionPage"
+import React, { useEffect } from 'react';
+import axios from 'axios';
+
 
 export default function App() {
+
+  const apiUrl = process.env.REACT_APP_API_URL;
+
   return (
     <PagesContainer>
       <BrowserRouter>
