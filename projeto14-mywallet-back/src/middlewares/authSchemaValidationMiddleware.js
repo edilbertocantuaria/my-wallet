@@ -1,6 +1,5 @@
 import { singupUserSchema, loginSchema } from "../schemas/authSchema.js";
 
-
 export function singupUserSchemaValidationMiddleware(req, res, next) {
     const validation = singupUserSchema.validate(req.body);
     if (validation.error) {
