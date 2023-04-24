@@ -1,8 +1,8 @@
-import cadastroSchema from "../schemas/authSchema.js";
-import loginSchema from "../schemas/loginSchema.js";
+import { singupUserSchema, loginSchema}  from "../schemas/authSchema.js";
 
-export default function cadastroSchemaValidationMiddleware(req, res, next) {
-    const validation = cadastroSchema.validate(req.body);
+
+export default function singupUserSchemaValidationMiddleware(req, res, next) {
+    const validation = singupUserSchema.validate(req.body);
     if (validation.error) {
         return res.sendStatus(422);
     }

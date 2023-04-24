@@ -1,7 +1,7 @@
 import db from "../db.js";
 import bcrypt from 'bcrypt';
 import { v4 as uuid } from 'uuid';
-import { cadastroSchema, loginSchema } from '../schemas/authSchema.js';
+import { singupUserSchema, loginSchema } from '../schemas/authSchema.js';
 
 
 export async function singupUser(req, res) {
@@ -14,7 +14,7 @@ export async function singupUser(req, res) {
     if (userAlreadyRegistered) return res.sendStatus(409);
     console.log(userAlreadyRegistered);
 
-    const validation = cadastroSchema.validate(user);
+    const validation = singupUserSchema.validate(user);
     if (validation.error) return res.sendStatus(422);
     console.log(validation);
 
