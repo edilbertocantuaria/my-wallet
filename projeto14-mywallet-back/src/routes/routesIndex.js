@@ -1,13 +1,9 @@
 import { Router } from "express";
-import cadastroRouter from './cadastroRouter.js';
-import loginRouter from './loginRouter.js';
+import authRouter from './authRouter.js';
 //importar as rotas aqui
 
 const router = Router();
-
-router.use(cadastroRouter);
-router.use(loginRouter);
-
+router.use(authRouter);
 
 //router.use(userRouter);
 export default router;
