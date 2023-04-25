@@ -7,6 +7,11 @@ const GlobalStyle = createGlobalStyle`
         font-weight: 400;
     }
     button {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        
         outline: none;
         border: none;
         border-radius: 5px;
@@ -53,6 +58,8 @@ const GlobalStyle = createGlobalStyle`
         text-decoration: none;
         padding-top: 30px;
     }
+
+    cursor: default !important;
 `
 
 export default GlobalStyle
