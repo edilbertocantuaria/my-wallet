@@ -2,15 +2,18 @@ import { useState } from 'react'
 import { AppContext } from './AppContext'
 
 export default function AppProvider({ children }) {
-    const [userImage, setUserImage] = useState("");
-
+    const [username, setUsername] = useState("");
+    const [token, setToken] = useState("");
+    
 
 
     return (
         <AppContext.Provider
             value={{
-                userImage, setUserImage,
-                
+                username, setUsername,
+                token, setToken
+
+
             }}>
             {children}
         </AppContext.Provider>

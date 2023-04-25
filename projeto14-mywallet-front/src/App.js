@@ -26,8 +26,10 @@ export default function App() {
       <PagesContainer>
         <BrowserRouter>
           <Routes>
-            <Route path="/singupUser" element={<SignUpPage />} />
             <Route path="/" element={<SignInPage />} />
+            <Route path="/singupUser" element={<SignUpPage />} />
+            <Route path="/home" element={<HomePage />} />
+
           </Routes>
         </BrowserRouter>
       </PagesContainer>
