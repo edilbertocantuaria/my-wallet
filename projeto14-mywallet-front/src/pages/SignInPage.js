@@ -82,8 +82,7 @@ export default function SignInPage() {
         <button
           type="submit"
           disabled={disableInputs}
-          data-test="login-btn"
-          colorOpacity={isLoading ? "0.7" : "1"}>
+          data-test="login-btn">
 
           {enter}
           {isLoading && (

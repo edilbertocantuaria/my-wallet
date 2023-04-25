@@ -37,35 +37,47 @@ export default function SignUpPage() {
       passwordConfirm: passwordConfirm
     }
 
-    const request = axios.post("https://mywallet-api-3sqt.onrender.com/singupUser", user);
+    if (password === passwordConfirm) {
+      const request = axios.post("https://mywallet-api-3sqt.onrender.com/singupUser", user);
 
-    request.then(() => {
-      alert("Cadastro realizado com sucesso!! Aproveite a plataforma do MyWallet 😉")
-      navigate("/");
-    });
+      request.then(() => {
+        alert("Cadastro realizado com sucesso!! Aproveite a plataforma do MyWallet 😉")
+        navigate("/");
+      });
 
-    request.catch(error => {
-      console.log(error.response.status);
-      let complementaryInfo;
-      switch (error.response.status) {
-        case 409:
-          complementaryInfo = "e-mail já cadastrado!";
-          break;
+      request.catch(error => {
+        console.log(error.response.status);
+        let complementaryInfo;
+        switch (error.response.status) {
+          case 409:
+            complementaryInfo = "e-mail já cadastrado!";
+            break;
 
-        case 422:
-          complementaryInfo = `\n\n⚫ há dados faltando ou as senhas não correspondem. \n⚫ Obs.: a senha deve possuir no mínimo 3 caracteres. `
-          break;
+          case 422:
+            complementaryInfo = `\n\n⚫ há dados faltando ou as senhas não correspondem. \n⚫ Obs.: a senha deve possuir no mínimo 3 caracteres. `
+            break;
 
 
-        default:
-          complementaryInfo = error.response.status;
-          break;
-      }
-      alert(`Não foi possível realizar seu cadastro: ${complementaryInfo}`)
+          default:
+            complementaryInfo = error.response.status;
+            break;
+        }
+        alert(`Não foi possível realizar seu cadastro: ${complementaryInfo}`)
+        setDisableInputs(false);
+        setIsLoading(false);
+        setRegistering("Cadastrar");
+      })
+
+
+    } else {
+      alert("As senhas não correspondem!");
+
       setDisableInputs(false);
       setIsLoading(false);
       setRegistering("Cadastrar");
-    })
+      setPassword("")
+      setPasswordConfirm("");
+    }
 
   }
 
@@ -97,8 +109,7 @@ export default function SignUpPage() {
           value={password}
           placeholder="senha"
           data-test="password-input"
-          onChange={e => setPassword(e.target.value.trim())}
-          autocomplete="new-password" />
+          onChange={e => setPassword(e.target.value.trim())} />
 
         <input
           type="password"
@@ -106,15 +117,12 @@ export default function SignUpPage() {
           value={passwordConfirm}
           placeholder="Confirme a senha"
           data-test="password-input"
-          onChange={e => setPasswordConfirm(e.target.value.trim())}
-          autocomplete="new-password" />
+          onChange={e => setPasswordConfirm(e.target.value.trim())} />
 
         <button
           type="submit"
           disabled={disableInputs}
-          data-test="login-btn"
-          colorOpacity={isLoading ? "0.7" : "1"}
-        >
+          data-test="login-btn">
 
           {registering}
           {isLoading && (
