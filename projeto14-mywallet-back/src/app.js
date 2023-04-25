@@ -1,5 +1,5 @@
 import express from 'express';
-import router from './routes/routesIndex.js';
+import router from './routers/routesIndex.js';
 import chalk from 'chalk';
 
 /*import dayjs from 'dayjs';

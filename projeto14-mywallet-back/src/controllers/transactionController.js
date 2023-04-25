@@ -30,7 +30,7 @@ export async function transactionOperation(req, res) {
         await db.collection("expenses").insertOne({
             date: dayjs(day).format('DD/MM'),
             operation: operation,
-            value: valueNumber,
+            value: -valueNumber,
             description: description.trim(),
         });
         res.status(201).send("New transaction created successfully");
