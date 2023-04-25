@@ -37,8 +37,6 @@ export default function SignUpPage() {
       passwordConfirm: passwordConfirm
     }
 
-    console.log(user);
-
     const request = axios.post("https://mywallet-api-3sqt.onrender.com/singupUser", user);
 
     request.then(() => {
