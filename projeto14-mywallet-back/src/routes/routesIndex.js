@@ -1,9 +1,9 @@
 import { Router } from "express";
 import authRouter from './authRouter.js';
-//importar as rotas aqui
+import transactionRouter from './transactionRouter.js'
 
 const router = Router();
 router.use(authRouter);
+router.use(transactionRouter);
 
-//router.use(userRouter);
 export default router;
