@@ -26,6 +26,15 @@ export default function SignInPage() {
     setEnter("");
     setIsLoading(true);
 
+    if (email === "" || password === "") {
+      alert("os campos não podem ficar em branco!")
+
+      setDisableInputs(false);
+      setIsLoading(false);
+      setEnter("Entrar");
+      return;
+    }
+
     const user = {
       email: email.toLowerCase(),
       password: password
@@ -34,20 +43,33 @@ export default function SignInPage() {
     const request = axios.post("https://mywallet-api-3sqt.onrender.com/", user)
 
     request.then(response => {
-      //setUsername(response.data.name);
-
-      //setIsLoading(false);
-      //setDisableInputs(false);
-      console.log(response);
-      console.log(response.data);
-
-
-
+      const token = response.data;
       navigate("/home");
     })
 
-    request.catch(() => {
-      alert("Os dados informados estão incorretos ou o usuário não está cadastrado!")
+    request.catch(error => {
+      console.log(error.response.status);
+      let complementaryInfo;
+      switch (error.response.status) {
+        case 401:
+          complementaryInfo = "a senha está incorreta!";
+          break;
+
+        case 404:
+          complementaryInfo = "usuário não cadastrado!";
+          break;
+
+        case 422:
+          complementaryInfo = `\n\nO formato do email está inválido!`
+          break;
+
+
+        default:
+          complementaryInfo = error.response.status;
+          break;
+      }
+      alert(`Não foi possível realizar seu login: ${complementaryInfo}`)
+
       setDisableInputs(false);
       setIsLoading(false);
       setEnter("Entrar");
