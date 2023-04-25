@@ -1,6 +1,8 @@
 import styled from "styled-components"
 import MyWalletLogo from "../components/MyWalletLogo"
 
+import useAppContext from '../hook/useAppContex';
+
 import { useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 
@@ -8,6 +10,8 @@ import axios from "axios"
 import { ThreeDots } from "react-loader-spinner";
 
 export default function SignInPage() {
+  const { setToken } = useAppContext();
+  
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -43,7 +47,7 @@ export default function SignInPage() {
     const request = axios.post("https://mywallet-api-3sqt.onrender.com/", user)
 
     request.then(response => {
-      const token = response.data;
+      setToken(response.data);
       navigate("/home");
     })
 

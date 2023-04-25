@@ -2,7 +2,35 @@ import styled from "styled-components"
 import { BiExit } from "react-icons/bi"
 import { AiOutlineMinusCircle, AiOutlinePlusCircle } from "react-icons/ai"
 
+import useAppContext from '../hook/useAppContex';
+
+import { useEffect, useState } from "react";
+import { Link, useParams, useNavigate } from "react-router-dom";
+import axios from "axios"
+
+import { ThreeDots } from "react-loader-spinner";
+
 export default function HomePage() {
+
+  const { transactions, setTransaction,
+    token } = useAppContext();
+
+  console.log(token);
+
+  const config = {
+    headers: {
+      authorization: `Bearer ${token}`
+    }
+  }
+
+  useEffect(() => {
+    const request = axios.get("https://mywallet-api-3sqt.onrender.com/home", config)
+    request.then(response => {
+      setTransaction(response.data);
+    })
+  }, [transactions]);
+
+
   return (
     <HomeContainer>
       <Header>

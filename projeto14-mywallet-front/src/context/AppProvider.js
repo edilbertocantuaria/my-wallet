@@ -4,6 +4,7 @@ import { AppContext } from './AppContext'
 export default function AppProvider({ children }) {
     const [username, setUsername] = useState("");
     const [token, setToken] = useState("");
+    const [transactions, setTransaction]=useState([]);
     
 
 
@@ -11,7 +12,8 @@ export default function AppProvider({ children }) {
         <AppContext.Provider
             value={{
                 username, setUsername,
-                token, setToken
+                token, setToken,
+                transactions, setTransaction
 
 
             }}>
