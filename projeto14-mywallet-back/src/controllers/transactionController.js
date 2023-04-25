@@ -26,7 +26,7 @@ export async function transactionOperation(req, res) {
         });
         res.status(201).send("New transaction created successfully");
 
-    } else if (operation==="expenses"){
+    } else if (operation === "expenses") {
         await db.collection("expenses").insertOne({
             date: dayjs(day).format('DD/MM'),
             operation: operation,
@@ -42,5 +42,18 @@ export async function transactionOperation(req, res) {
 
 
 
+
+}
+
+export async function allTransactions(req, res) {
+    try {
+        const incomeEntrees = await db.collection("incomeEntrees").find().toArray();
+        const expenses = await db.collection("expenses").find().toArray();
+        const transactions = [...incomeEntrees, ...expenses];
+        res.status(200).send(transactions);
+
+    } catch (err) {
+        res.status(500).send(message.err);
+    }
 
 }
