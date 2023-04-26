@@ -47,6 +47,7 @@ export async function transactionOperation(req, res) {
 }
 
 export async function allTransactions(req, res) {
+    const { userId } = res.locals.session
     try {
         const incomeEntrees = await db.collection("incomeEntrees").find({ userId }).toArray();
         const expenses = await db.collection("expenses").find({ userId }).toArray();
