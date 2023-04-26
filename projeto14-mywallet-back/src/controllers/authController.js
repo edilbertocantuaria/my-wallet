@@ -44,10 +44,6 @@ export async function loginUser(req, res) {
             token: token,
             userId: user._id
         })
-        console.log(user);
-        console.log(token);
-        localStorage.setItem('user', user);
-        localStorage.setItem('token', token);
 
         res.status(200).send({ user, token });
 
