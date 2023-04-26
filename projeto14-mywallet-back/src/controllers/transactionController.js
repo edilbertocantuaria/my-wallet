@@ -20,6 +20,7 @@ export async function transactionOperation(req, res) {
 
         await db.collection("incomeEntrees").insertOne({
             date: dayjs(day).format('DD/MM'),
+            time: dayjs(day).format("HH:mm:ss"),
             operation: operation,
             value: valueNumber,
             description: description.trim(),
@@ -37,12 +38,6 @@ export async function transactionOperation(req, res) {
     } else {
         return res.status(400).send("Operação inválida!")
     }
-
-
-
-
-
-
 }
 
 export async function allTransactions(req, res) {
