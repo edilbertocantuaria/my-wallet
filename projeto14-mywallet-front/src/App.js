@@ -29,6 +29,7 @@ export default function App() {
             <Route path="/" element={<SignInPage />} />
             <Route path="/singupUser" element={<SignUpPage />} />
             <Route path="/home" element={<HomePage />} />
+            <Route path="/newTransaction/:operation" element={<TransactionsPage />} />
 
           </Routes>
         </BrowserRouter>

@@ -1,11 +1,16 @@
 import { useState } from 'react'
 import { AppContext } from './AppContext'
+import { useResolvedPath } from 'react-router-dom';
 
 export default function AppProvider({ children }) {
     const [username, setUsername] = useState("");
     const [token, setToken] = useState("");
-    const [transactions, setTransaction]=useState([]);
-    
+    const [transactions, setTransactions] = useState([]);
+    const [listTransactions, setListTransactions] = useState([]);
+    const [balance, setBalance] = useState(0);
+    const [idUser, setIdUser] = useState("");
+    const [operation, setOperation]=useState("");
+
 
 
     return (
@@ -13,7 +18,12 @@ export default function AppProvider({ children }) {
             value={{
                 username, setUsername,
                 token, setToken,
-                transactions, setTransaction
+                transactions, setTransactions,
+                listTransactions, setListTransactions,
+                balance, setBalance,
+                idUser, setIdUser,
+                operation, setOperation
+
 
 
             }}>

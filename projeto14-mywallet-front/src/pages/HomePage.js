@@ -2,76 +2,93 @@ import styled from "styled-components"
 import { BiExit } from "react-icons/bi"
 import { AiOutlineMinusCircle, AiOutlinePlusCircle } from "react-icons/ai"
 
-import useAppContext from '../hook/useAppContex';
+import useAppContext from '../hook/useAppContext';
 
 import { useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from "axios"
 
-import { ThreeDots } from "react-loader-spinner";
-
 export default function HomePage() {
 
-  const { transactions, setTransaction,
-    token } = useAppContext();
+  const { transactions, setTransactions,
+    username,
+    token,
+    listTransactions, setListTransactions,
+    balance, setBalance,
+    idUser,
+    operation, setOperation } = useAppContext();
 
-  console.log(token);
+  //console.log(token);
+  //console.log(idUser);
 
   const config = {
     headers: {
-      authorization: `Bearer ${token}`
+      authorization: `Bearer ${token}`,
     }
   }
 
   useEffect(() => {
     const request = axios.get("https://mywallet-api-3sqt.onrender.com/home", config)
     request.then(response => {
-      setTransaction(response.data);
+      setListTransactions(response.data);
+
     })
+
   }, [transactions]);
+  console.log(listTransactions);
+
+  useEffect(() => {
+    let newBalance = 0;
+    listTransactions.forEach((transaction) => {
+      if (transaction.operation === "incomeEntrees") {
+        newBalance += transaction.value;
+      } else {
+        newBalance -= transaction.value;
+      }
+    });
+    setBalance(newBalance);
+  }, [listTransactions]);
 
 
   return (
     <HomeContainer>
       <Header>
-        <h1>Olá, Fulano</h1>
+        <h1>Olá, {username}</h1>
         <BiExit />
       </Header>
 
       <TransactionsContainer>
         <ul>
-          <ListItemContainer>
-            <div>
-              <span>30/11</span>
-              <strong>Almoço mãe</strong>
-            </div>
-            <Value color={"negativo"}>120,00</Value>
-          </ListItemContainer>
-
-          <ListItemContainer>
-            <div>
-              <span>15/11</span>
-              <strong>Salário</strong>
-            </div>
-            <Value color={"positivo"}>3000,00</Value>
-          </ListItemContainer>
+          {listTransactions.map((transaction) =>
+            <ListItemContainer>
+              <div>
+                <span>{transaction.date}</span>
+                <strong>{transaction.description}</strong>
+              </div>
+              <Value color={transaction.operation === "incomeEntrees" ? "positivo" : "negativo"}>{transaction.value.toFixed(2).replace(".", ",")}</Value>
+            </ListItemContainer>
+          )}
         </ul>
 
         <article>
           <strong>Saldo</strong>
-          <Value color={"positivo"}>2880,00</Value>
+          <Value color={balance >= 0 ? "positivo" : "negativo"}>{balance.toFixed(2).replace(".", ",")}</Value>
         </article>
       </TransactionsContainer>
 
 
       <ButtonsContainer>
-        <button>
-          <AiOutlinePlusCircle />
-          <p>Nova <br /> entrada</p>
+        <button onClick={() => setOperation("entrada")}>
+          <Link to="/newTransaction/incomeEntrees">
+            <AiOutlinePlusCircle />
+            <p>Nova <br /> entrada</p>
+          </Link>
         </button>
-        <button>
-          <AiOutlineMinusCircle />
-          <p>Nova <br />saída</p>
+        <button onClick={() => setOperation("saída")}>
+          <Link to="/newTransaction/expenses">
+            <AiOutlineMinusCircle />
+            <p>Nova <br />saída</p>
+          </Link>
         </button>
       </ButtonsContainer>
 
