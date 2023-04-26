@@ -2,10 +2,12 @@ import db from "../db.js";
 import dayjs from "dayjs"
 import "dayjs/locale/pt-br.js";
 import { transactionSchema } from '../schemas/transactionSchema.js';
+import { ObjectId } from "mongodb"
 
 export async function transactionOperation(req, res) {
 
     const { value, description } = req.body;
+    const { userId } = res.locals.session
     const transaction = { value, description };
 
     const { operation } = req.params;
@@ -17,11 +19,10 @@ export async function transactionOperation(req, res) {
     const day = new Date();
     const valueNumber = Number(value);
 
+    dayjs.locale('pt-br');
     if (operation === "incomeEntrees") {
-        dayjs.locale('pt-br');
-
-
         await db.collection("incomeEntrees").insertOne({
+            userId: userId,
             date: dayjs(day).format('DD/MM'),
             time: dayjs(day).format("HH:mm:ss"),
             operation: operation,
@@ -32,7 +33,9 @@ export async function transactionOperation(req, res) {
 
     } else if (operation === "expenses") {
         await db.collection("expenses").insertOne({
+            userId: userId,
             date: dayjs(day).format('DD/MM'),
+            time: dayjs(day).format("HH:mm:ss"),
             operation: operation,
             value: valueNumber,
             description: description.trim(),
@@ -45,8 +48,8 @@ export async function transactionOperation(req, res) {
 
 export async function allTransactions(req, res) {
     try {
-        const incomeEntrees = await db.collection("incomeEntrees").find().toArray();
-        const expenses = await db.collection("expenses").find().toArray();
+        const incomeEntrees = await db.collection("incomeEntrees").find({ userId }).toArray();
+        const expenses = await db.collection("expenses").find({ userId }).toArray();
         const transactions = [...incomeEntrees, ...expenses];
         res.status(200).send(transactions);
 

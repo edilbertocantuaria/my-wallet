@@ -16,6 +16,8 @@ export async function tokenValidation(req, res, next) {
         return res.sendStatus(401)
     }
 
+    res.locals.session = session;
+
     const user = await db.collection('users').findOne({ _id: session.userId });
 
     if (!user) {
