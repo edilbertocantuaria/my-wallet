@@ -30,7 +30,12 @@ export default function HomePage() {
   useEffect(() => {
     const request = axios.get("https://mywallet-api-3sqt.onrender.com/home", config)
     request.then(response => {
-      setListTransactions(response.data);
+      const sortedTransactions = response.data.sort((a, b) => {
+        const dateA = new Date(a.date.split('/').reverse().join('-'));
+        const dateB = new Date(b.date.split('/').reverse().join('-'));
+        return dateB - dateA;
+      });
+      setListTransactions(sortedTransactions);
 
     })
 
@@ -119,6 +124,10 @@ const TransactionsContainer = styled.article`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  ul{
+    overflow-y: auto;
+    max-height: calc(100vh - 280px); /* ajuste esse valor para a altura ideal */
+  }
   article {
     display: flex;
     justify-content: space-between;   
