@@ -1,5 +1,6 @@
 import db from "../db.js";
 import dayjs from "dayjs"
+import "dayjs/locale/pt-br.js";
 import { transactionSchema } from '../schemas/transactionSchema.js';
 
 export async function transactionOperation(req, res) {
@@ -17,6 +18,8 @@ export async function transactionOperation(req, res) {
     const valueNumber = Number(value);
 
     if (operation === "incomeEntrees") {
+        dayjs.locale('pt-br');
+
 
         await db.collection("incomeEntrees").insertOne({
             date: dayjs(day).format('DD/MM'),
