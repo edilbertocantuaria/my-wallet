@@ -4,7 +4,7 @@ import MyWalletLogo from "../components/MyWalletLogo"
 import useAppContext from '../hook/useAppContext';
 
 import { useState } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios"
 
 import { ThreeDots } from "react-loader-spinner";

@@ -4,22 +4,18 @@ import { AiOutlineMinusCircle, AiOutlinePlusCircle } from "react-icons/ai"
 
 import useAppContext from '../hook/useAppContext';
 
-import { useEffect, useState } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios"
 
 export default function HomePage() {
 
-  const { transactions, setTransactions,
+  const { transactions,
     username,
     token,
     listTransactions, setListTransactions,
     balance, setBalance,
-    idUser,
-    operation, setOperation } = useAppContext();
-
-  //console.log(token);
-  //console.log(idUser);
+    setOperation } = useAppContext();
 
   const config = {
     headers: {
@@ -40,7 +36,6 @@ export default function HomePage() {
     })
 
   }, [transactions]);
-  console.log(listTransactions);
 
   useEffect(() => {
     let newBalance = 0;
@@ -86,13 +81,13 @@ export default function HomePage() {
         <button onClick={() => setOperation("entrada")}>
           <Link to="/newTransaction/incomeEntrees">
             <AiOutlinePlusCircle />
-            <p>Nova <br /> entrada</p>
+            <p>Nova entrada</p>
           </Link>
         </button>
         <button onClick={() => setOperation("saída")}>
           <Link to="/newTransaction/expenses">
             <AiOutlineMinusCircle />
-            <p>Nova <br />saída</p>
+            <p>Nova saída</p>
           </Link>
         </button>
       </ButtonsContainer>
@@ -147,7 +142,7 @@ const ButtonsContainer = styled.section`
     width: 50%;
     height: 115px;
     font-size: 22px;
-    text-align: left;
+    text-align: center;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

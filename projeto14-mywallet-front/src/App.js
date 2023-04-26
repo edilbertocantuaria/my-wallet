@@ -7,8 +7,8 @@ import SignInPage from "./pages/SignInPage"
 import SignUpPage from "./pages/SignUpPage"
 import TransactionsPage from "./pages/TransactionPage"
 
-import React, { useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
+
 
 import AppProvider from './context/AppProvider'
 

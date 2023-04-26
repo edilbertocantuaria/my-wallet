@@ -3,8 +3,8 @@ import MyWalletLogo from "../components/MyWalletLogo"
 
 import useAppContext from '../hook/useAppContext';
 
-import { useState } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 import axios from "axios"
 import { ThreeDots } from "react-loader-spinner";
@@ -15,6 +15,8 @@ export default function SignInPage() {
     setIdUser } = useAppContext();
 
 
+
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -23,6 +25,31 @@ export default function SignInPage() {
   const [enter, setEnter] = useState("Entrar")
 
   const navigate = useNavigate();
+
+
+  /*useEffect(() => {
+    const token = localStorage.getItem("token");
+    const username = localStorage.getItem("username");
+    const userId = localStorage.getItem("userId");
+
+    if (token && username && userId) {
+      navigate("/home");
+    }
+    return;
+  }, [])*/
+
+
+
+
+  /*useEffect(() => {
+    const token = localStorage.getItem("token");
+    const username = localStorage.getItem("username");
+    const userId = localStorage.getItem("userId");
+
+    if (token && username && userId) {
+      navigate("/home");
+    }
+  }, []);*/
 
   function login(event) {
     event.preventDefault();
@@ -53,6 +80,12 @@ export default function SignInPage() {
       setToken(response.data.token);
       setUsername(response.data.user.name);
       setIdUser(response.data.user._id);
+
+
+      /*localStorage.setItem("token", response.data.token);
+      localStorage.setItem("username", response.data.user.name);
+      localStorage.setItem("userId", response.data.user._id);*/
+
       navigate("/home");
     })
 
