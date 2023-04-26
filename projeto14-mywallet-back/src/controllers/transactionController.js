@@ -14,7 +14,7 @@ export async function transactionOperation(req, res) {
 
     if (validation.error) return res.status(422).send(validation.error);
 
-    const day = Date.now()
+    const day = new Date();
     const valueNumber = Number(value);
 
     if (operation === "incomeEntrees") {
